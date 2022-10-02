@@ -10,6 +10,7 @@ const Conatiner = styled.div`
     justify-content:center;
     font-size:14px;
     font-weight:500;
+ 
 
 
 `;

@@ -1,7 +1,3 @@
-<<<<<<< HEAD
- export const slideItems=[
-   
-=======
 export const sliderItems = [
     {
       id: 1,
@@ -10,7 +6,6 @@ export const sliderItems = [
       desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
       bg: "f5fafd",
     },
->>>>>>> 415183fd38454e7c6b9c8d7f0e4273908da45f4c
     {
       id: 2,
       img: "https://i.ibb.co/DG69bQ4/2.png",

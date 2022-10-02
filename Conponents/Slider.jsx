@@ -1,11 +1,8 @@
 import { ArrowLeftOutlined, ArrowRightOutlined, ControlPointSharp } from '@mui/icons-material';
 import styled from 'styled-components';
 import React, { useState } from 'react';
-<<<<<<< HEAD
-import {slideItems} from '../pages/api/data'
-=======
 import {sliderItems} from '../pages/api/data'
->>>>>>> 415183fd38454e7c6b9c8d7f0e4273908da45f4c
+import { mobile } from '../pages/responsive';
 
 const Conatiner = styled.div`
     width:100%;
@@ -13,6 +10,7 @@ const Conatiner = styled.div`
     display:flex;
 position: relative;
 overflow: hidden;
+${mobile({display:"none"})}
 
 `;
 const Arrow = styled.div`
@@ -86,7 +84,7 @@ const Slider = () => {
         }
 
     }
-    console.log(slideItems, 'hjghj')
+    console.log(sliderItems, 'hjghj')
     return (
         <Conatiner>
             <Arrow direction="left" onClick={() => handleClick("left")}>
@@ -94,7 +92,7 @@ const Slider = () => {
             </Arrow>
             <Wrapper slideIndex={slideIndex}>
                 {
-                    slideItems?.map(item => (
+                    sliderItems?.map(item => (
                         <>
                             <Slide bg={item.bg} key={item.id}>
                                 <ImgContainer>

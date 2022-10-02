@@ -10,7 +10,7 @@ import Slider from "../Conponents/Slider";
 export default function Home() {
 
   return (
-    <div >
+    < >
       <Announcement/>
       <Navbar/>
       <Slider/>
@@ -19,6 +19,6 @@ export default function Home() {
       <Newsletter></Newsletter>
       <Footer/>
  
-    </div>
+    </>
   )
 }
