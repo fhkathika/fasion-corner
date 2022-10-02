@@ -1,7 +1,7 @@
 import { ArrowLeftOutlined, ArrowRightOutlined, ControlPointSharp } from '@mui/icons-material';
 import styled from 'styled-components';
 import React, { useState } from 'react';
-import sliderItems from '../pages/api/data'
+import {slideItems} from '../pages/api/data'
 
 const Conatiner = styled.div`
     width:100%;
@@ -73,9 +73,12 @@ cursor: pointer;
 const Slider = () => {
     const [slideIndex, setSlideIndex] = useState()
     const handleClick = (direction) => {
+        if(direction=="left"){
+            setSlideIndex(slideIndex>0? slideIndex-1:2)
+        }
 
     }
-    console.log(sliderItems,'hjghj')
+    console.log(slideItems, 'hjghj')
     return (
         <Conatiner>
             <Arrow direction="left" onClick={() => handleClick("left")}>
@@ -83,7 +86,7 @@ const Slider = () => {
             </Arrow>
             <Wrapper>
                 {
-                    sliderItems?.map(item => (
+                    slideItems?.map(item => (
                         <>
                             <Slide bg={item.bg}>
                                 <ImgContainer>
