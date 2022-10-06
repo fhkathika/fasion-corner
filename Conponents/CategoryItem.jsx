@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
 import {categories} from '../pages/api/data'
@@ -41,13 +42,19 @@ font-weight: 600;
 const CategoryItem = ({item}) => {
     return (
         <Container>
+          
          <Image src={item.img}/>
+         <Link href={`/products/${item.cat}`}>
+    
+       
          <Info>
             <Title >
                 {item.title}
             </Title>
             <Button>SHOP NOW</Button>
          </Info>
+         </Link>
+         
         </Container>
     );
 };
