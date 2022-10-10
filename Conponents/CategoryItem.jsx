@@ -44,7 +44,7 @@ const CategoryItem = ({item}) => {
         <Container>
           
          <Image src={item.img}/>
-         <Link href={`/products/${item.cat}`}>
+         <Link href={`/productlist/${item.cat}`}>
     
        
          <Info>
