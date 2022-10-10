@@ -1,12 +1,14 @@
 import { Add, Remove } from '@mui/icons-material';
+import { useRouter } from 'next/router';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Announcement from '../Conponents/Announcement';
-import Footer from '../Conponents/Footer';
-import Navbar from '../Conponents/Navbar';
-import Newsletter from '../Conponents/Newsletter';
-import { mobile } from './responsive';
+import Announcement from '../../Conponents/Announcement';
+import Footer from '../../Conponents/Footer';
+import Navbar from '../../Conponents/Navbar';
+import Newsletter from '../../Conponents/Newsletter';
+import { publicRequest } from '../../requestMethod';
+import { mobile } from '../responsive';
 const Container=styled.div``;
 const Wraper=styled.div`
 padding: 50px;
@@ -108,13 +110,27 @@ font-weight: 500;
 
 `;
 const Product = () => {
+    const {asPath}=useRouter()
+    const id=asPath.split("/")[2];
+    const [product,setProduct]=useState({})
+    useEffect(()=>{
+        const getProduct=async()=>{
+            try{
+const res=await publicRequest.get("/product/find/"+id)
+setProduct(res.data)
+            }catch(err){
+
+            }
+        }
+        getProduct()
+    },[id])
     return (
         <Container>
             <Navbar/>
             <Announcement/>
             <Wraper>
                 <ImageConatiner>
-                 <Image src='https://i.ibb.co/N11QYVD/51r-Do-Dio7d-L-UL1500-removebg-preview.png'/>   
+                 <Image src={product.img}/>   
                 </ImageConatiner>
                 <InfoContainer>
                     <Title>Denim jumsuit</Title>
