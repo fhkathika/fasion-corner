@@ -5,12 +5,10 @@ import Navbar from "../Conponents/Navbar";
 import Newsletter from "../Conponents/Newsletter";
 import Products from "../Conponents/Products";
 
-
-
 export default function Home() {
 
   return (
-    < >
+   <>
       <Announcement/>
       <Navbar/>
       {/* <Slider/> */}
@@ -19,6 +17,6 @@ export default function Home() {
       <Newsletter></Newsletter>
       <Footer/>
  
-    </>
+   </>
   )
 }
