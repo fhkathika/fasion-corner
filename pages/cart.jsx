@@ -1,11 +1,17 @@
 import { Add, Remove } from '@mui/icons-material';
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Announcement from '../Conponents/Announcement';
 import Footer from '../Conponents/Footer';
 import Navbar from '../Conponents/Navbar';
 import { mobile } from './responsive';
+import StripeCheckout from 'react-stripe-checkout';
+import axios from 'axios';
+import { userRequest } from '../requestMethod';
+// const KEY=process.env.REACT_APP_STRIPE
+const KEY = 
+"pk_test_51LpldqH2YJhKnvBhdIzQTz5xqUxiKY96lh69eXQMcZOOXUi9hPb4uiJGEMMSpmDLErQtuZT97qsi2d1MF0UAkY0X00oPLbqD47"
 const Container = styled.div`
     
 `;
@@ -143,11 +149,31 @@ const Button = styled.button`
  padding: 10px;
   background-color: black;
   color: white;
-  
 `;
 const Cart = () => {
   const cart = useSelector(state => state.cart)
-  console.log('cart',cart.products);
+
+  const [stripeToken,setStripeToken]=useState(null)
+  useEffect(()=>{
+    const makeRequest=async()=>{
+        try{
+    const res= await userRequest.post("/stripe/payment",{
+        tokenId:stripeToken.id,
+        amount:cart.total * 100,
+    }
+    );
+    // history.push("/index")
+    console.log(res?.data);
+        }catch(err){
+            console.log(err)
+        }
+    }
+    stripeToken && makeRequest();
+    },[stripeToken,cart.total])
+  const onToken=(token)=>{
+    setStripeToken(token)
+  }
+  console.log(stripeToken);
   return (
     <Container>
       <Navbar />
@@ -193,31 +219,12 @@ const Cart = () => {
 
             <Hr />
 
-            {/* <Product>
-              <ProductDetail>
-                <Image src="https://i.pinimg.com/originals/2d/af/f8/2daff8e0823e51dd752704a47d5b795c.png"/>
-              <Details>
-                <ProductName><b>Product:</b>HAKURA T-SHIRT</ProductName>
-                <ProductId><b>ID:</b>JESSIE THUNDER SHOES</ProductId> 
-                <ProductColor color="gray"/>
-                <ProductSize><b>Size:</b>M</ProductSize>
-              </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <Add/>
-                  <ProductAmount>2</ProductAmount>
-                  <Remove/>
-                </ProductAmountContainer>
-                <ProductPrice>$20</ProductPrice>
-              </PriceDetail>
-            </Product> */}
           </Info>
           <Summary>
             <SummaryTitle> ORDER SUMMARY </SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$80</SummaryItemPrice>
+              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
@@ -229,9 +236,32 @@ const Cart = () => {
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText >Total</SummaryItemText>
-              <SummaryItemPrice>$80</SummaryItemPrice>
-            </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
+              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
+            </SummaryItem> 
+            <StripeCheckout name="Fasion Corner"
+                    image="https://i.ibb.co/6RLtCxz/ff6a8e03edf24b14b241299ea7fef5f5.png"
+                    billingAddress
+                    shippingAddress
+                    description={`Your total is $ ${cart.total}`}
+                    amount={cart.total*100}
+                    token={onToken}
+                    stripeKey={KEY}
+                >
+                    <button
+                        style={{
+                            border: "none",
+                            width: 120,
+                            borderRadius: 5,
+                            padding: "20px",
+                            backgroundColor: "black",
+                            color: "white",
+                            fontWeight: "600",
+                            cursor: "pointer",
+                        }}
+                    >
+                        Pay Now
+                    </button>
+                </StripeCheckout>
           </Summary>
         </Bottom>
       </Wrapper>

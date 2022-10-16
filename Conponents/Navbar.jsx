@@ -66,7 +66,7 @@ const Right = styled.div`
 
 const Navbar = () => {
     const quantity=useSelector(state=>state.cart.quantity)
-    
+ console.log(useSelector(state=>state.cart));
     return (
         <Container>
             <Wrapper>

@@ -2,8 +2,8 @@ import axios from 'axios';
 import React,{useState,useEffect} from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 
-const KEY = 
-"pk_test_51LpldqH2YJhKnvBhdIzQTz5xqUxiKY96lh69eXQMcZOOXUi9hPb4uiJGEMMSpmDLErQtuZT97qsi2d1MF0UAkY0X00oPLbqD47"
+// const KEY = 
+// "pk_test_51LpldqH2YJhKnvBhdIzQTz5xqUxiKY96lh69eXQMcZOOXUi9hPb4uiJGEMMSpmDLErQtuZT97qsi2d1MF0UAkY0X00oPLbqD47"
 const Pay = () => {
     const[stripeToken,setStripeToken]=useState(null)
     
@@ -36,7 +36,7 @@ stripeToken && makeRequest();
                 justifyContent: "center",
             }}
         >
-            {
+            {/* {
                 stripeToken?(
                     <span>Processing.please wait</span>
                 )
@@ -67,7 +67,7 @@ stripeToken && makeRequest();
                 </StripeCheckout>
                 )
             }
-      
+       */}
         </div>
     );
 };
