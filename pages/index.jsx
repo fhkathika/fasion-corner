@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import Announcement from "../Conponents/Announcement";
 import Categories from "../Conponents/Categories";
 import Footer from "../Conponents/Footer";
@@ -9,13 +10,18 @@ export default function Home() {
 
   return (
    <>
-      <Announcement/>
-      <Navbar/>
-      {/* <Slider/> */}
-      <Categories></Categories>
-      <Products></Products>
-      <Newsletter></Newsletter>
-      <Footer/>
+
+     <Announcement/>
+     <Navbar/>
+     {/* <Slider/> */}
+     <Categories></Categories>
+     <Products></Products>
+     <Newsletter></Newsletter>
+     <Footer/>
+    
+
+   
+   
  
    </>
   )
