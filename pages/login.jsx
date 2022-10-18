@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { login } from '../redux/apiCalls';
+import { useRouter } from 'next/router'
 import { mobile } from './responsive';
 const Container=styled.div`
 width: 100vw;
@@ -66,33 +67,49 @@ const Error=styled.span`
 const Login = () => {
     const [username,setUsername]=useState("");
     const [password,setPassword]=useState("");
+    const router=useRouter()
     const dispatch=useDispatch();
     const {isFetching,error}=useSelector((state)=>state.user)
     const user=useSelector((state)=>state.user.currentUser);
     const handleClick=(e)=>{
      e.preventDefault();
      login(dispatch,{username,password})
+     if(user){
+         router.push('/')
+     }
+     else{
+        router.push('/login')  
+     }
+   
+   
     }
-  
+
     return (
-        <Container>
-            <Wrapper>
-                <Title>
-                 SIGN IN  
-                </Title>
-                <Form>
-                   
-                    <Input placeholder="username" onChange={(e)=>setUsername(e.target.value)}/>
-                  
-                    <Input placeholder="password" onChange={(e)=>setPassword(e.target.value)}/>
-                 <Button onClick={handleClick} disabled={isFetching}>LOGIN</Button>
-                 { error && <Error>Someting went wrong</Error> }
-                    <Link>DO YOU REMEMBER THE PASSWORD</Link>
-                    <Link>CREATE A NEW ACCOUNT</Link>
-                </Form>
-            </Wrapper>
-            
-        </Container>
+        <>
+       
+     <Container>
+     <Wrapper>
+         <Title>
+          SIGN IN  
+         </Title>
+         <Form>
+             <Input placeholder="username" onChange={(e)=>setUsername(e.target.value)}/>
+           
+             <Input placeholder="password" onChange={(e)=>setPassword(e.target.value)}/>
+          <Button onClick={handleClick} disabled={isFetching}>LOGIN</Button>
+          { error && <Error>Someting went wrong</Error> }
+             <Link>DO YOU REMEMBER THE PASSWORD</Link>
+             <Link>CREATE A NEW ACCOUNT</Link>
+         </Form>
+     </Wrapper>
+     
+ </Container>
+         
+      
+       
+        </>
+      
+       
     );
 };
 
