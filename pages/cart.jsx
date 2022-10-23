@@ -8,7 +8,7 @@ import Navbar from '../Conponents/Navbar';
 import { mobile } from './responsive';
 import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
-import { userRequest } from '../requestMethod';
+import { userRequest } from '../pages/requestMethod';
 // const KEY=process.env.REACT_APP_STRIPE
 const KEY = 
 "pk_test_51LpldqH2YJhKnvBhdIzQTz5xqUxiKY96lh69eXQMcZOOXUi9hPb4uiJGEMMSpmDLErQtuZT97qsi2d1MF0UAkY0X00oPLbqD47"

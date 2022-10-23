@@ -8,7 +8,7 @@ import Footer from '../../Conponents/Footer';
 import Navbar from '../../Conponents/Navbar';
 import Newsletter from '../../Conponents/Newsletter';
 import { addProduct } from '../../redux/cartRedux';
-import { publicRequest } from '../../requestMethod';
+import { publicRequest } from '../../pages/requestMethod';
 import { mobile } from '../responsive';
 import { useDispatch } from 'react-redux';
 const Container = styled.div``;
