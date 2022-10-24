@@ -12,8 +12,8 @@ import NewProduct from "./pages/newProduct/NewProduct";
 import Login from "./pages/login/Login";
 
 function App() {
-  const admin=JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).currentUser.isAdmin;
-  console.log(admin);
+  // const admin=JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).currentUser.isAdmin;
+  // console.log(admin);
   return (
     <Router>
       <Topbar />
@@ -24,8 +24,7 @@ function App() {
             <Login/>
           </Route>
        
-          {
-            admin && 
+         
             <>
              <Route exact path="/">
             <Home />
@@ -51,7 +50,7 @@ function App() {
             </>
             
            
-          }
+     
          
        
         </Switch>
