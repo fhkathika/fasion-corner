@@ -9,6 +9,8 @@ import { mobile } from './responsive';
 import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
 import { userRequest } from '../pages/requestMethod';
+import { useHistory } from 'react-router-dom';
+
 // const KEY=process.env.REACT_APP_STRIPE
 const KEY = 
 "pk_test_51LpldqH2YJhKnvBhdIzQTz5xqUxiKY96lh69eXQMcZOOXUi9hPb4uiJGEMMSpmDLErQtuZT97qsi2d1MF0UAkY0X00oPLbqD47"
@@ -152,24 +154,28 @@ const Button = styled.button`
 `;
 const Cart = () => {
   const cart = useSelector(state => state.cart)
-
+  const history = useHistory();
   const [stripeToken,setStripeToken]=useState(null)
   useEffect(()=>{
     const makeRequest=async()=>{
         try{
-    const res= await userRequest.post("/stripe/payment",{
+    const res= await userRequest.post("/checkout/payment",{
         tokenId:stripeToken.id,
         amount:cart.total * 100,
     }
     );
-    // history.push("/index")
+  
+    history.push("/success", {
+      stripeData: res.data,
+      // products: cart, 
+    });
     console.log(res?.data);
         }catch(err){
             console.log(err)
         }
     }
     stripeToken && makeRequest();
-    },[stripeToken,cart.total])
+    },[stripeToken,cart.total,history])
   const onToken=(token)=>{
     setStripeToken(token)
   }
@@ -259,7 +265,7 @@ const Cart = () => {
                             cursor: "pointer",
                         }}
                     >
-                        Pay Now
+                       CHECKOUT
                     </button>
                 </StripeCheckout>
           </Summary>
