@@ -1,5 +1,5 @@
 import { Add, Remove } from '@mui/icons-material';
-import React,{useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Announcement from '../Conponents/Announcement';
@@ -10,10 +10,10 @@ import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
 import { userRequest } from '../pages/requestMethod';
 import { useHistory } from 'react-router-dom';
-
-// const KEY=process.env.REACT_APP_STRIPE
-const KEY = 
-"pk_test_51LpldqH2YJhKnvBhdIzQTz5xqUxiKY96lh69eXQMcZOOXUi9hPb4uiJGEMMSpmDLErQtuZT97qsi2d1MF0UAkY0X00oPLbqD47"
+import {useRouter} from 'next/router'
+// const KEY=process.env.REACT_APP_STRIPE;
+const KEY =
+  "pk_test_51LpldqH2YJhKnvBhdIzQTz5xqUxiKY96lh69eXQMcZOOXUi9hPb4uiJGEMMSpmDLErQtuZT97qsi2d1MF0UAkY0X00oPLbqD47"
 const Container = styled.div`
     
 `;
@@ -155,28 +155,33 @@ const Button = styled.button`
 const Cart = () => {
   const cart = useSelector(state => state.cart)
   const history = useHistory();
-  const [stripeToken,setStripeToken]=useState(null)
-  useEffect(()=>{
-    const makeRequest=async()=>{
-        try{
-    const res= await userRequest.post("/checkout/payment",{
-        tokenId:stripeToken.id,
-        amount:cart.total * 100,
-    }
-    );
-  
-    history.push("/success", {
-      stripeData: res.data,
-      // products: cart, 
-    });
-    console.log(res?.data);
-        }catch(err){
-            console.log(err)
+  const [stripeToken, setStripeToken] = useState(null)
+  const router=useRouter()
+  useEffect(() => {
+    const makeRequest = async () => {
+      try {
+        const res = await userRequest.post("/checkout/payment", {
+          tokenId: stripeToken.id,
+          amount: cart.total * 100,
         }
+        );
+
+    
+      router.push({
+        pathname: "/success",
+        query: {
+          stripeData:  JSON.stringify(res.data),
+          products: JSON.stringify(cart)
+        },
+      })
+        console.log(cart);
+      } catch (err) {
+        console.log(err.message)
+      }
     }
     stripeToken && makeRequest();
-    },[stripeToken,cart.total,history])
-  const onToken=(token)=>{
+  }, [stripeToken, cart.total, history])
+  const onToken = (token) => {
     setStripeToken(token)
   }
   console.log(stripeToken);
@@ -201,7 +206,7 @@ const Cart = () => {
                 <>
                   <Product>
                     <ProductDetail>
-                      <Image src={product.img}/>
+                      <Image src={product.img} />
                       <Details>
                         <ProductName><b>Product:</b>{product.title}</ProductName>
                         <ProductId><b>ID:</b>{product._id}</ProductId>
@@ -243,31 +248,31 @@ const Cart = () => {
             <SummaryItem type="total">
               <SummaryItemText >Total</SummaryItemText>
               <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
-            </SummaryItem> 
+            </SummaryItem>
             <StripeCheckout name="Fasion Corner"
-                    image="https://i.ibb.co/6RLtCxz/ff6a8e03edf24b14b241299ea7fef5f5.png"
-                    billingAddress
-                    shippingAddress
-                    description={`Your total is $ ${cart.total}`}
-                    amount={cart.total*100}
-                    token={onToken}
-                    stripeKey={KEY}
-                >
-                    <button
-                        style={{
-                            border: "none",
-                            width: 120,
-                            borderRadius: 5,
-                            padding: "20px",
-                            backgroundColor: "black",
-                            color: "white",
-                            fontWeight: "600",
-                            cursor: "pointer",
-                        }}
-                    >
-                       CHECKOUT
-                    </button>
-                </StripeCheckout>
+              image="https://i.ibb.co/6RLtCxz/ff6a8e03edf24b14b241299ea7fef5f5.png"
+              billingAddress
+              shippingAddress
+              description={`Your total is $ ${cart.total}`}
+              amount={cart.total * 100}
+              token={onToken}
+              stripeKey={KEY}
+            >
+              <button
+                style={{
+                  border: "none",
+                  width: 120,
+                  borderRadius: 5,
+                  padding: "20px",
+                  backgroundColor: "black",
+                  color: "white",
+                  fontWeight: "600",
+                  cursor: "pointer",
+                }}
+              >
+                CHECKOUT
+              </button>
+            </StripeCheckout>
           </Summary>
         </Bottom>
       </Wrapper>
