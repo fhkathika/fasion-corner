@@ -48,7 +48,7 @@ const ProductList = () => {
              [e.target.name]:value,
          })
      }
-    //  console.log(filter);
+   
     return (
         <Conatiner>
            <Navbar/>

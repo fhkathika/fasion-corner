@@ -174,7 +174,7 @@ const Cart = () => {
           products: JSON.stringify(cart)
         },
       })
-        console.log(cart);
+
       } catch (err) {
         console.log(err.message)
       }
@@ -184,7 +184,7 @@ const Cart = () => {
   const onToken = (token) => {
     setStripeToken(token)
   }
-  console.log(stripeToken);
+
   return (
     <Container>
       <Navbar />

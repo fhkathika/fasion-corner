@@ -70,15 +70,18 @@ const Login = () => {
     const router=useRouter()
     const dispatch=useDispatch();
     const {isFetching,error}=useSelector((state)=>state.user)
-    const user=useSelector((state)=>state.user.currentUser);
+    const user=useSelector((state)=>state.user?.currentUser);
+    console.log('user',user);
     const handleClick=(e)=>{
      e.preventDefault();
      login(dispatch,{username,password})
      if(user){
          router.push('/')
+         console.log('user exist');
      }
      else{
         router.push('/login')  
+        console.log('no user');
      }
    
    
