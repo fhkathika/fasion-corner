@@ -10,20 +10,81 @@ export const productSlice=createSlice({
     reducers:{
 //GET ALL
 getProductStart:(state)=>{
-  state.isFetching =true 
-  state.products=false
+  state.isFetching =true ;
+  state.products=false;
 },
 getProductSuccess:(state,action)=>{
-  state.isFetching =true 
-  state.products=action.payload
+  state.isFetching =false ;
+  state.products=action.payload;
 },
 getProductFailure:(state)=>{
-  state.isFetching =true 
-  state.error=true
+  state.isFetching =false ;
+  state.error=true;
+},
+//DELETE
+deleteProductStart:(state)=>{
+  state.isFetching =true ;
+  state.products=false;
+},
+deleteProductSuccess:(state,action)=>{
+  state.isFetching =false ;
+  state.products.splice(
+  state.peoduct.findIndex(item=>item._id===action.payload),1
+  );
+  
+},
+deleteProductFailure:(state)=>{
+  state.isFetching =false ;
+  state.error=true;
+},
+
+//UPDATE
+updateProductStart:(state)=>{
+  state.isFetching =true ;
+  state.products=false;
+},
+updateProductSuccess:(state,action)=>{
+  state.isFetching =false ;
+  state.products[
+    state.products.find((item)=>item._id===action.payload.id)
+  ]=action.payload.product;
+  
+},
+updateProductFailure:(state)=>{
+  state.isFetching =false ;
+  state.error=true;
+},
+
+//ADD Product
+addProductStart:(state)=>{
+  state.isFetching =true ;
+  state.products=false;
+},
+addProductSuccess:(state,action)=>{
+  state.isFetching =false ;
+  state.products[
+    state.products.push(action.payload)
+  ]=action.payload.product;
+  
+},
+addProductFailure:(state)=>{
+  state.isFetching =false ;
+  state.error=true;
 }
     },
 });
 export const {
-getProductStart,getProductSuccess,getProductFailure
+getProductStart,
+getProductSuccess,
+getProductFailure,
+deleteProductStart,
+deleteProductSuccess,
+deleteProductFailure,
+updateProductStart,
+updateProductSuccess,
+updateProductFailure,
+addProductStart,
+addProductSuccess,
+addProductFailure,
 }=productSlice.actions;
 export default productSlice.reducer
