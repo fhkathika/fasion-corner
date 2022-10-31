@@ -2,11 +2,16 @@ import { useState } from "react";
 import "./newProduct.css";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import app from "../../firebase";
+import { addProduct } from "../../redux/apiCalls";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 export default function NewProduct() {
   const [inputs,setInputs]=useState({})
   const [file,setFile]=useState(null)
-  const [cat,setCat]=useState([])
+  const [cat,setCat]=useState([]);
+  const history=useHistory()
+  const dispatch=useDispatch()
 const handleChange=(e)=>{
 setInputs(prev=>{
   return{...prev,[e.target.name]:e.target.value}
@@ -49,13 +54,14 @@ uploadTask.on('state_changed',
     // Handle successful uploads on complete
     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-      console.log('File available at', downloadURL);
+  const product={...inputs,img:downloadURL,categories:cat};
+  addProduct(product,dispatch)
     });
   }
 );
+
 }
 
-console.log(file);
   return (
     <div className="newProduct">
       <h1 className="addProductTitle">New Product</h1>

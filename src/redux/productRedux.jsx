@@ -29,7 +29,7 @@ deleteProductStart:(state)=>{
 deleteProductSuccess:(state,action)=>{
   state.isFetching =false ;
   state.products.splice(
-  state.peoduct.findIndex(item=>item._id===action.payload),1
+  state.products.findIndex(item=>item._id===action.payload),1
   );
   
 },
@@ -56,21 +56,18 @@ updateProductFailure:(state)=>{
 },
 
 //ADD Product
-addProductStart:(state)=>{
-  state.isFetching =true ;
-  state.products=false;
+addProductStart: (state) => {
+  state.isFetching = true;
+  state.error = false;
 },
-addProductSuccess:(state,action)=>{
-  state.isFetching =false ;
-  state.products[
-    state.products.push(action.payload)
-  ]=action.payload.product;
-  
+addProductSuccess: (state, action) => {
+  state.isFetching = false;
+  state.products.push(action.payload);
 },
-addProductFailure:(state)=>{
-  state.isFetching =false ;
-  state.error=true;
-}
+addProductFailure: (state) => {
+  state.isFetching = false;
+  state.error = true;
+},
     },
 });
 export const {

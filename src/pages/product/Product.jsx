@@ -13,7 +13,7 @@ export default function Product() {
  const location=useLocation()
  const productId=location.pathname.split("/")[2];
  const [pStats,setPStats]=useState([])
-console.log(productId);
+
  const product=useSelector(state=>state.product.products.find((product)=>product._id===productId))
  const MONTHS=useMemo(()=>[
     "Jan",
@@ -51,12 +51,7 @@ list.map((item)=>
   },[])
   return (
     <div className="product">
-      <div className="productTitleContainer">
-        <h1 className="productTitle">Product</h1>
-        <Link to="/newproduct">
-          <button className="productAddButton">Create</button>
-        </Link>
-      </div>
+      
       <div className="productTop">
           <div className="productTopLeft">
               <Chart data={pStats} dataKey="Sales" title="Sales Performance"/>

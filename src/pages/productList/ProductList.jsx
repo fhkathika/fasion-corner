@@ -11,14 +11,16 @@ export default function ProductList() {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.product?.products);
 
+
   const [data, setData] = useState(products)
 
   useEffect(() => {
     getProducts(dispatch);
-  }, [dispatch]);
+
+  }, [dispatch, data]);
 
   const handleDelete = (id) => {
-   deleteProduct(id, dispatch);
+    deleteProduct(id, dispatch);
   };
 
   const columns = [
@@ -64,6 +66,13 @@ export default function ProductList() {
 
   return (
     <div className="productList">
+      <div className="productTitleContainer">
+        <h1 className="productTitle">Product List</h1>
+        <Link to="/newproduct">
+          <button className="productAddButton">Create Product</button>
+        </Link>
+      </div>
+
       <DataGrid
         rows={data}
         disableSelectionOnClick
