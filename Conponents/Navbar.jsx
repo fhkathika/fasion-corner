@@ -6,6 +6,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {mobile} from '../pages/responsive'
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 const Container = styled.div`
 /* height:70px; */
 /* ${mobile({height:"50px"})} */
@@ -66,7 +67,12 @@ const Right = styled.div`
 
 const Navbar = () => {
     const quantity=useSelector(state=>state.cart.quantity)
- 
+    const activeUser=useSelector(state=>state.user.currentUser)
+    console.log(activeUser);
+    const router=useRouter()
+ const handleSignIn=()=>{
+    router.push("/login")
+ }
     return (
         <Container>
             <Wrapper>
@@ -82,7 +88,13 @@ const Navbar = () => {
                 </Center>
                 <Right>
                     <MenuItem>REGISTER</MenuItem>
-                    <MenuItem>SIGN IN</MenuItem>
+                    {
+                        activeUser?
+                        <MenuItem onClick={handleSignIn}>LOG OUT</MenuItem>
+                        :
+                        <MenuItem onClick={handleSignIn}>SIGN IN</MenuItem>
+                    }
+                    
                     <Link href="/cart">
                     <MenuItem>
                         <Badge badgeContent={quantity} color="primary">

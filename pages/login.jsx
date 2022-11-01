@@ -77,11 +77,12 @@ const Login = () => {
      login(dispatch,{username,password})
      if(user){
          router.push('/')
-         console.log('user exist');
+        
      }
      else{
+         localStorage.clear()
         router.push('/login')  
-        console.log('no user');
+      
      }
    
    
