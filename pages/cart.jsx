@@ -77,10 +77,10 @@ const Details = styled.div`
  justify-content: space-around;
 `;
 const ProductName = styled.span`
- 
+ color: teal;
 `;
 const ProductId = styled.span`
-
+color: gray;
 `;
 const ProductColor = styled.div`
 width: 20px;
@@ -89,6 +89,7 @@ border-radius: 50%;
 background-color: ${props => props.color};
 `;
 const ProductSize = styled.span`
+color: gray;
 
 `;
 const PriceDetail = styled.div`
@@ -103,12 +104,13 @@ display: flex;
 align-items: center;
 margin-bottom: 20px;
 `;
-const ProductAmount = styled.div`
-font-size: 24px;
+const ProductAmount = styled.span`
+color: gray;
 margin: 5px;
 ${mobile({ margin: "5px  15px" })}
 `;
 const ProductPrice = styled.div`
+color: teal;
 font-size: 30px;
 font-weight: 200;
 ${mobile({ marginBottom: "20px" })}
@@ -191,34 +193,34 @@ const Cart = () => {
       <Announcement />
       <Wrapper>
         <Title>YOUR BAG</Title>
-        <Top>
+        {/* <Top>
           <TopButton>CONTINUE SHOPPING</TopButton>
           <TopTexts>
             <TopText>Shopping Bag(2)</TopText>
             <TopText>Your Wishlist(0)</TopText>
           </TopTexts>
           <TopButton type='filled'>CHECKOUT NOW</TopButton>
-        </Top>
+        </Top> */}
         <Bottom>
           <Info>
             {
-              cart.products.map((product) => (
+              cart.products?.map((product) => (
                 <>
                   <Product>
                     <ProductDetail>
                       <Image src={product.img} />
                       <Details>
-                        <ProductName><b>Product:</b>{product.title}</ProductName>
-                        <ProductId><b>ID:</b>{product._id}</ProductId>
+                        <ProductName><span>{product.title}</span></ProductName>
+                        <ProductId><span>ID: </span>{product._id}</ProductId>
                         <ProductColor color={product.color} />
-                        <ProductSize><b>Size:</b>{product.size}</ProductSize>
+                        <ProductSize><span>Size: </span>{product.size}</ProductSize>
                       </Details>
                     </ProductDetail>
                     <PriceDetail>
                       <ProductAmountContainer>
-                        <Add />
-                        <ProductAmount>{product.quantity}</ProductAmount>
-                        <Remove />
+                        {/* <Add /> */}
+                        <ProductAmount><span>Quantity:</span> {product.quantity}</ProductAmount>
+                        {/* <Remove /> */}
                       </ProductAmountContainer>
                       <ProductPrice>${product.price * product.quantity}</ProductPrice>
                     </PriceDetail>

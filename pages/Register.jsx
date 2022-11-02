@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import { register } from '../redux/apiCalls';
+import { publicRequest } from './requestMethod';
 import { mobile } from './responsive';
+
 const Container=styled.div`
 width: 100vw;
 height: 100vh;
@@ -55,6 +59,32 @@ cursor: pointer;
 `;
 
 const Register = () => {
+  
+    
+    const [inputs,setInputs]=useState({})
+    
+    const handleChange = (e) => {
+        setInputs(prev => {
+          return { ...prev, [e.target.name]: e.target.value }
+        })
+      }
+      const handleSignup=(e)=>{
+          e.preventDefault()
+          const createUser=async()=>{
+            try{
+                await publicRequest.post("/auth/register",{
+                  "body":JSON.stringify(inputs)
+                   
+               })
+               console.log(inputs)
+             }catch(err){
+                 console.log(err.message);
+             }
+          }
+          createUser()
+      }
+  
+    
     return (
         <Container>
             <Wrapper>
@@ -62,15 +92,15 @@ const Register = () => {
                   CREATE AN ACOUNT  
                 </Title>
                 <Form>
-                    <Input placeholder=" name"/>
-                    <Input placeholder="last name"/>
-                    <Input placeholder="username"/>
-                    <Input placeholder="email"/>
+                    {/* <Input placeholder=" name" type="text" onChange={(e)=>setFName(e.target,value)}/>
+                    <Input placeholder="last name" type="text" onChange={(e)=>setLName(e.target,value)}/> */}
+                    <Input placeholder="username" required type="text" name="username" onChange={handleChange}/>
+                    <Input placeholder="email" required type="text" name="email" onChange={handleChange}/>
                   
-                    <Input placeholder="password"/>
-                    <Input placeholder="confirm password"/>
+                    <Input placeholder="password" required type="password" name="password" onChange={handleChange}/>
+                    {/* <Input placeholder="confirm password"/> */}
                     <Aggrement>by creating account,I concent to the processing of my personal data in accoundance with the <b>PRIVACY POLICY</b></Aggrement>
-                    <Button>CREATE</Button>
+                    <Button  onClick={handleSignup} >CREATE</Button>
                 </Form>
             </Wrapper>
             
