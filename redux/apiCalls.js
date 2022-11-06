@@ -11,13 +11,3 @@ dispatch(loginFailure())
         }
     
 }
-export const register=async (dispatch)=>{
-    dispatch(registerStart())
-        try{
-const res=await publicRequest.post("/auth/register")
-dispatch(registerSuccess(res.data))
-        }catch(err){
-dispatch(registerFailure())
-        }
-    
-}

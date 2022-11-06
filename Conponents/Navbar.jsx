@@ -70,8 +70,16 @@ const Navbar = () => {
     const activeUser=useSelector(state=>state.user.currentUser)
     console.log(activeUser);
     const router=useRouter()
+   const handleRegister=(e)=>{
+       e.preventDefault()
+router.push("/Register")
+   }
  const handleSignIn=()=>{
     router.push("/login")
+ } 
+ const handleSignOut=()=>{
+    router.push("/login")
+    localStorage.clear()
  }
     return (
         <Container>
@@ -87,10 +95,10 @@ const Navbar = () => {
                     <Logo>FASION CORNER</Logo>
                 </Center>
                 <Right>
-                    <MenuItem>REGISTER</MenuItem>
+                    <MenuItem onClick={handleRegister}>REGISTER</MenuItem>
                     {
                         activeUser?
-                        <MenuItem onClick={handleSignIn}>LOG OUT</MenuItem>
+                        <MenuItem onClick={handleSignOut}>LOG OUT</MenuItem>
                         :
                         <MenuItem onClick={handleSignIn}>SIGN IN</MenuItem>
                     }
