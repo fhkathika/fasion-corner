@@ -62,6 +62,10 @@ const Right = styled.div`
     ${mobile({ flex:2,justifyContent:"center"})}
   
 `;
+const Username=styled.div`
+    color: teal;
+    font-size:14px;
+`
 
 
 
@@ -81,6 +85,9 @@ router.push("/Register")
     router.push("/login")
     localStorage.clear()
  }
+ const handleOrder=(id)=>{
+     router.push('/success')
+ }
     return (
         <Container>
             <Wrapper>
@@ -98,7 +105,11 @@ router.push("/Register")
                     <MenuItem onClick={handleRegister}>REGISTER</MenuItem>
                     {
                         activeUser?
-                        <MenuItem onClick={handleSignOut}>LOG OUT</MenuItem>
+                        <>
+                        <MenuItem onClick={handleSignOut}>LOG OUT <Username> {activeUser.username}</Username></MenuItem>
+                        <MenuItem onClick={()=>handleOrder(activeUser._id)}>Orders</MenuItem>
+                        </>
+                        
                         :
                         <MenuItem onClick={handleSignIn}>SIGN IN</MenuItem>
                     }

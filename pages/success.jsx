@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -7,12 +8,12 @@ import { userRequest } from "../pages/requestMethod";
 
 const Success = () => {
 const router=useRouter()
-  const data = JSON.parse(router.query.stripeData);
-  const cart = JSON.parse(router.query.products);
+  const data = router.query.stripeData;
+  const cart = router.query.cart;
   console.log('cart',cart);
   const currentUser = useSelector((state) => state.user.currentUser);
-  const [orderId, setOrderId] = useState(null);
-
+  const [orderId, setOrderId] = useState([]);
+console.log(currentUser);
   useEffect(() => {
     const createOrder = async () => {
       try {
@@ -27,12 +28,26 @@ const router=useRouter()
           amount: cart.total,
           address: data.billing_details.address,
         });
-        setOrderId(res.data.products);
+        // setOrderId(res.data.products);
       
       } catch(err) { console.log(err.message);}
     };
     data && createOrder();
-  }, [cart, data, currentUser]);
+  }, [ currentUser]); 
+
+  //Get USER Order
+   useEffect(() => {
+    const getUserOrder = async () => {
+      try {
+        const res = await userRequest.get(`/find/${currentUser?._id}`);
+        // setOrderId(res.data.products);
+console.log(res.data);
+      
+      } catch(err) { console.log(err.message);}
+    };
+   getUserOrder();
+  }, [ currentUser?._id,currentUser]);
+
 
   return (
     <div
@@ -44,7 +59,7 @@ const router=useRouter()
         justifyContent: "center",
       }}
     >
-      {orderId?.map((item)=>(
+      {/* {orderId?.map((item)=>(
         <>
          <ul>
           <li>{item.productName}</li>
@@ -53,8 +68,8 @@ const router=useRouter()
         </ul>
         </>
        
-      ))}
-      <button style={{ padding: 10, marginTop: 20 }}>Go to Homepage</button>
+      ))} */}
+      <button style={{ padding: 10, marginTop: 20 }} >Go to Homepage </button>
     </div>
   );
 };

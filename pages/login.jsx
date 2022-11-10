@@ -75,7 +75,7 @@ const Login = () => {
     const handleClick = (e) => {
         e.preventDefault();
         login(dispatch, { username, password })
-        // router.push('/')
+     router.push('/')
 
 
 
