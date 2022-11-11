@@ -39,7 +39,7 @@ console.log(currentUser);
    useEffect(() => {
     const getUserOrder = async () => {
       try {
-        const res = await userRequest.get(`/find/${currentUser?._id}`);
+        const res = await userRequest.get(`/order/find/${currentUser?._id}`);
         // setOrderId(res.data.products);
 console.log(res.data);
       

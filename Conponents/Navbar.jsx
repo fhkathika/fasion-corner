@@ -1,12 +1,15 @@
 import { Search } from '@mui/icons-material';
-import React from 'react';
+import React, { useState } from 'react';
 import Badge from '@mui/material/Badge';
 import styled from "styled-components";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {mobile} from '../pages/responsive'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { logout } from '../redux/apiCalls';
+import { clearCart } from '../redux/cartRedux';
+// import logout from '../pages/logout';
 const Container = styled.div`
 /* height:70px; */
 /* ${mobile({height:"50px"})} */
@@ -72,7 +75,11 @@ const Username=styled.div`
 const Navbar = () => {
     const quantity=useSelector(state=>state.cart.quantity)
     const activeUser=useSelector(state=>state.user.currentUser)
-    console.log(activeUser);
+    const userCart=useSelector(state=>state.cart)
+    const [user,setUser]=useState(activeUser)
+    const [cart,setCart]=useState(userCart)
+    const dispatch=useDispatch()
+// console.log('userCart',userCart)
     const router=useRouter()
    const handleRegister=(e)=>{
        e.preventDefault()
@@ -82,9 +89,15 @@ router.push("/Register")
     router.push("/login")
  } 
  const handleSignOut=()=>{
-    router.push("/login")
-    localStorage.clear()
+    // router.push("/login")
+    logout(dispatch)
+    setUser(null)
+    dispatch( clearCart())
+    setCart(null)
+    // localStorage.setItem(user)
+console.log('my cart',cart)
  }
+ 
  const handleOrder=(id)=>{
      router.push('/success')
  }
@@ -104,9 +117,9 @@ router.push("/Register")
                 <Right>
                     <MenuItem onClick={handleRegister}>REGISTER</MenuItem>
                     {
-                        activeUser?
+                        user?
                         <>
-                        <MenuItem onClick={handleSignOut}>LOG OUT <Username> {activeUser.username}</Username></MenuItem>
+                        <MenuItem onClick={handleSignOut}>LOG OUT <Username> {user.username}</Username></MenuItem>
                         <MenuItem onClick={()=>handleOrder(activeUser._id)}>Orders</MenuItem>
                         </>
                         
@@ -116,7 +129,7 @@ router.push("/Register")
                     
                     <Link href="/cart">
                     <MenuItem>
-                        <Badge badgeContent={quantity} color="primary">
+                        <Badge badgeContent={cart?.quantity} color="primary">
                             <ShoppingCartIcon color="action" />
                         </Badge>
                     </MenuItem>

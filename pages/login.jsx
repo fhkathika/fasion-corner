@@ -5,6 +5,7 @@ import { login } from '../redux/apiCalls';
 import { useRouter } from 'next/router'
 import { mobile } from './responsive';
 import Refresh from '@mui/icons-material';
+import { useEffect } from 'react';
 const Container = styled.div`
 width: 100vw;
 height: 100vh;
@@ -68,19 +69,41 @@ const Error = styled.span`
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [loginFailed, setLoginFailed] = useState("login failed");
+
     const router = useRouter()
     const dispatch = useDispatch();
     const { isFetching, error,currentUser} = useSelector((state) => state.user)
 
     const handleClick = (e) => {
         e.preventDefault();
+      const  id=currentUser?._id 
         login(dispatch, { username, password })
-     router.push('/')
+        // console.log(login())
+ 
+        console.log('from login haveUser onClick',  currentUser)
+    //  if(!haveUser )
+    //  {
+    //     console.log('login successfull')
+       
+    //     sethaveUser(haveUser)
+    //     setLoginFailed("");
+    //     router.push('/')
+    //  }
+    //  else {
+    //     console.log('login failed')
+    //     sethaveUser("")
+    // setLoginFailed("Login Failed!");
+ 
 
-
-
-
+    //  }
     }
+ useEffect(()=>{
+    currentUser &&
+    router.push('/')
+ 
+   
+ },[currentUser])
 
     return (
         <>
@@ -92,11 +115,12 @@ const Login = () => {
                     </Title>
                     <Form>
                         <Input placeholder="username" onChange={(e) => setUsername(e.target.value)} />
-
-                        <Input placeholder="password" onChange={(e) => setPassword(e.target.value)} />
+  <Input placeholder="password" onChange={(e) => setPassword(e.target.value)} />
                         <Button onClick={handleClick} disabled={isFetching}>LOGIN</Button>
-                        {/* {error && <Error>Someting went wrong</Error>} */}
-                        {currentUser  && <p>loading...</p>}
+                     
+                    
+                        {currentUser  && <><p>loading...</p> </> }
+                        {currentUser  && <><p>loading...</p> </> }
                         <Link>DO YOU REMEMBER THE PASSWORD</Link>
                         <Link>CREATE A NEW ACCOUNT</Link>
                     </Form>

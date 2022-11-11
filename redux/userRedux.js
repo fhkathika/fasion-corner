@@ -20,23 +20,29 @@ const userSlice=createSlice({
         state.isFetching=false;
         state.error=true;
     } 
-    , registerStart:(state)=>{
+    ,
+    logoutStart:(state)=>{
         state.isFetching=true
     },
-    registerSuccess:(state)=>{
-        state.isFetching=true;
-        state.currentUser=action.payload;
+    logoutSuccess:(state)=>{
+        state.isFetching=false;
+        state.currentUser=null;
     },
-    registerFailure:(state)=>{
+    logoutFailure:(state)=>{
         state.isFetching=false;
         state.error=true;
     }
+   
    }
 
 })
-export const {loginStart,
+export const {
+    loginStart,
     loginSuccess,
     loginFailure,
+    logoutStart,
+    logoutSuccess,
+    logoutFailure,
     registerStart,
     registerSuccess,
     registerFailure

@@ -124,7 +124,8 @@ const Product = () => {
     const dispatch = useDispatch()
     const router=useRouter()
     const { isFetching, error,currentUser} = useSelector((state) => state.user)
-    console.log(currentUser);
+    const [userId,setUserId]=useState(currentUser?._id)
+   
     useEffect(() => {
         const getProduct = async () => {
             try {
@@ -148,17 +149,23 @@ const Product = () => {
         }
     }
 
-    const handleClick = (e) => {
+    const handleAddToCart = (e) => {
         e.preventDefault()
-        if (currentUser== null) {
-            router.push("/login")
-        }
-        else {
-            dispatch(addProduct({ ...product, quantity, color, size }))
+      if(userId){
+        dispatch(addProduct({ ...product, quantity, color, size,userId}))
+        setUserId()
+      }
+      else{
+        setUserId('')
+     
+        router.push('/login')
+      }
+         
+            
         }
 
 
-    }
+    
     return (
         <Container>
             <Navbar />
@@ -205,15 +212,8 @@ const Product = () => {
                             <Add onClick={() => handleQuantity("inc")} />
                         </AmountContainer>
                         {
-                            currentUser== null ?
-                                <>
-                                    
-                                    <Button onClick={handleClick}>Add To Cart</Button>
-                                    <span>login first!</span>
-                                </>
-                                :
-                                <Button onClick={handleClick}>Add To Cart</Button>
-
+                            
+                                    <Button onClick={handleAddToCart}>Add To Cart</Button>
                         }
 
                     </AddContainer>
