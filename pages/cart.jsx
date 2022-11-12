@@ -156,9 +156,15 @@ const Button = styled.button`
 `;
 const Cart = () => {
   const cart = useSelector(state => state.cart)
+ 
+  // const {loginUser,products,total}= useSelector((state) => state.cart)
+  const {currentUser}= useSelector((state) => state.user)
+  //  const singleCart=cart.products?.filter((item)=>item?.userId==loginUser
+  // ?._id)
   const history = useHistory();
   const [stripeToken, setStripeToken] = useState(null)
   const router=useRouter()
+console.log('cRT',cart)
   useEffect(() => {
     const makeRequest = async () => {
       try {
@@ -172,8 +178,8 @@ const Cart = () => {
       router.push({
         pathname: "/success",
         query: {
-          stripeData:  JSON.stringify(res.data),
-          products: JSON.stringify(cart)
+          stripeData: JSON.stringify(res.data),
+          products: JSON.stringify(cart),
         },
       })
 
@@ -182,7 +188,7 @@ const Cart = () => {
       }
     }
     stripeToken && makeRequest();
-  }, [stripeToken, cart.total, history])
+  }, [stripeToken, cart.total,router])
   const onToken = (token) => {
     setStripeToken(token)
   }
@@ -203,8 +209,10 @@ const Cart = () => {
         </Top> */}
         <Bottom>
           <Info>
+            
+          
             {
-              cart.products?.map((product) => (
+              cart.products?.filter((item)=>item?.userId==currentUser?._id).map((product) => (
                 <>
                   <Product>
                     <ProductDetail>
@@ -227,7 +235,13 @@ const Cart = () => {
                   </Product>
                 </>
               ))
+            
             }
+            
+        
+            
+
+
 
 
             <Hr />

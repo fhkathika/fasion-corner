@@ -124,8 +124,9 @@ const Product = () => {
     const dispatch = useDispatch()
     const router=useRouter()
     const { isFetching, error,currentUser} = useSelector((state) => state.user)
-    const [userId,setUserId]=useState(currentUser?._id)
    
+    const [userId,setUserId]=useState(currentUser?._id)
+
     useEffect(() => {
         const getProduct = async () => {
             try {

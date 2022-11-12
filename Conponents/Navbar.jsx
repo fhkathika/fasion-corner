@@ -92,10 +92,10 @@ router.push("/Register")
     // router.push("/login")
     logout(dispatch)
     setUser(null)
-    dispatch( clearCart())
-    setCart(null)
+    // dispatch( clearCart())
+    // setCart(null)
     // localStorage.setItem(user)
-console.log('my cart',cart)
+// console.log('my cart',cart)
  }
  
  const handleOrder=(id)=>{
@@ -129,7 +129,7 @@ console.log('my cart',cart)
                     
                     <Link href="/cart">
                     <MenuItem>
-                        <Badge badgeContent={cart?.quantity} color="primary">
+                        <Badge badgeContent={quantity} color="primary">
                             <ShoppingCartIcon color="action" />
                         </Badge>
                     </MenuItem>
