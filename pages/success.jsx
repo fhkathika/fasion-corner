@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
 
-import { userRequest } from "../pages/requestMethod";
+import { publicRequest, userRequest } from "../pages/requestMethod";
 
 
 const Success = () => {
@@ -17,7 +17,8 @@ const cart = router.query.products;
   const currentUser = useSelector((state) => state.user.currentUser);
   const {loginUser} = useSelector((state) => state.cart);
   const [orderId, setOrderId] = useState([]);
-// console.log(loginUser);
+  const [userOrder, setuserOrder] = useState([]);
+console.log(cart!=null && JSON.parse(cart));
 useEffect(() => {
   const createOrder = async () => {
     try {
@@ -25,32 +26,36 @@ useEffect(() => {
           userId: currentUser._id,
         products: cart!=null && JSON.parse(cart).products?.map((item) => ({
           productId: item._id,
+          productName:item.title,
+          img:item.img,
           quantity: item._quantity,
         })),
-        amount: cart.total,
-        address: data.billing_details.address,
+        amount:  cart!=null && JSON.parse(cart).total,
+        address: data!=null && JSON.parse(data).billing_details.address,
       });
-      setOrderId(res.data._id);
-      console.log(res);
-      console.log(products);
+     
+      console.log(res.data);
+    
       
-    } catch {}
+    } catch (err){
+      console.log(err.message);
+    }
   };
   data && createOrder();
-}, [cart, data, currentUser]);
+}, [ ]);
 console.log(orderId);
   //Get USER Order
    useEffect(() => {
     const getUserOrder = async () => {
       try {
-        const res = await userRequest.get(`order/find/${loginUser.userId}`);
-        // setOrderId(res.data.products);
-console.log(res);
+        const res = await userRequest.get(`/order/find/${currentUser?._id}`);
+        setuserOrder(res.data);
+console.log(res.data);
       
       } catch(err) { console.log(err.message);}
     };
    getUserOrder();
-  }, [ currentUser?._id,currentUser]);
+  }, [ ]);
 
 
   return (
@@ -63,16 +68,25 @@ console.log(res);
         justifyContent: "center",
       }}
     >
-      {orderId?.map((item)=>(
+      {
+      userOrder?.map((item)=>(
         <>
          <ul>
-          <li>{item.productName}</li>
-          <li>{item.productId}</li>
-          <li>quantity{item.quantity}</li>
+          <li>{item.amount}</li>
+          <li>{
+            item.products.map((pr)=>(
+              <>
+              <p>{pr.productName}</p>
+              </>
+            ))
+            }
+          </li>
+          <li></li>
         </ul>
         </>
        
-      ))}
+      ))
+      }
       <button style={{ padding: 10, marginTop: 20 }} >Go to Homepage </button>
     </div>
   );

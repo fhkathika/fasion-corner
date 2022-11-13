@@ -173,8 +173,9 @@ console.log('cRT',cart)
           amount: cart.total * 100,
         }
         );
+        
 
-    
+    console.log('sent');
       router.push({
         pathname: "/success",
         query: {
