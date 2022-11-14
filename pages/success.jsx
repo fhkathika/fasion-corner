@@ -19,6 +19,7 @@ const cart = router.query.products;
   const [orderId, setOrderId] = useState([]);
   const [userOrder, setuserOrder] = useState([]);
 console.log(cart!=null && JSON.parse(cart));
+let count=0;
 useEffect(() => {
   const createOrder = async () => {
     try {
@@ -41,9 +42,10 @@ useEffect(() => {
       console.log(err.message);
     }
   };
-  data && createOrder();
+  data && count++
+  data && count==1 && createOrder();
 }, [ ]);
-console.log(orderId);
+console.log('count',count);
   //Get USER Order
    useEffect(() => {
     const getUserOrder = async () => {
@@ -55,7 +57,7 @@ console.log(res.data);
       } catch(err) { console.log(err.message);}
     };
    getUserOrder();
-  }, [ ]);
+  }, [userOrder ]);
 
 
   return (
@@ -77,6 +79,7 @@ console.log(res.data);
             item.products.map((pr)=>(
               <>
               <p>{pr.productName}</p>
+              {/* <img src={pr.img} alt="" /> */}
               </>
             ))
             }

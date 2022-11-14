@@ -1,4 +1,5 @@
 import { publicRequest } from "../pages/requestMethod"
+import { clearCart } from "./cartRedux"
 import { loginFailure, loginStart, loginSuccess, logoutFailure, logoutStart, logoutSuccess, registerFailure, registerStart, registerSuccess } from "./userRedux"
 
 export const login=async (dispatch,user)=>{

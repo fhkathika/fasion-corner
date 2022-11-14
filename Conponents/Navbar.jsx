@@ -1,4 +1,4 @@
-import { Search } from '@mui/icons-material';
+import { CleanHands, Search } from '@mui/icons-material';
 import React, { useState } from 'react';
 import Badge from '@mui/material/Badge';
 import styled from "styled-components";
@@ -92,9 +92,10 @@ router.push("/Register")
     // router.push("/login")
     logout(dispatch)
     setUser(null)
-    // dispatch( clearCart())
+  
+ 
     // setCart(null)
-    // localStorage.setItem(user)
+//    localStorage.clear()
 // console.log('my cart',cart)
  }
  
@@ -129,9 +130,13 @@ router.push("/Register")
                     
                     <Link href="/cart">
                     <MenuItem>
-                        <Badge badgeContent={quantity} color="primary">
-                            <ShoppingCartIcon color="action" />
-                        </Badge>
+                    {
+                        userCart.loginUser.userId==activeUser?._id  &&
+                        <Badge badgeContent= {  quantity }color="primary"  >
+                        <ShoppingCartIcon color="action" />
+                    </Badge>
+                    }
+                       
                     </MenuItem>
                     </Link>
                    

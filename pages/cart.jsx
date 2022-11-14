@@ -1,6 +1,6 @@
 import { Add, Remove } from '@mui/icons-material';
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Announcement from '../Conponents/Announcement';
 import Footer from '../Conponents/Footer';
@@ -11,6 +11,7 @@ import axios from 'axios';
 import { userRequest } from '../pages/requestMethod';
 import { useHistory } from 'react-router-dom';
 import {useRouter} from 'next/router'
+import { clearCart } from '../redux/cartRedux';
 // const KEY=process.env.REACT_APP_STRIPE;
 const KEY =
   "pk_test_51LpldqH2YJhKnvBhdIzQTz5xqUxiKY96lh69eXQMcZOOXUi9hPb4uiJGEMMSpmDLErQtuZT97qsi2d1MF0UAkY0X00oPLbqD47"
@@ -156,7 +157,7 @@ const Button = styled.button`
 `;
 const Cart = () => {
   const cart = useSelector(state => state.cart)
- 
+ const dispatch=useDispatch()
   // const {loginUser,products,total}= useSelector((state) => state.cart)
   const {currentUser}= useSelector((state) => state.user)
   //  const singleCart=cart.products?.filter((item)=>item?.userId==loginUser
@@ -165,6 +166,7 @@ const Cart = () => {
   const [stripeToken, setStripeToken] = useState(null)
   const router=useRouter()
 console.log('cRT',cart)
+
   useEffect(() => {
     const makeRequest = async () => {
       try {
@@ -183,13 +185,17 @@ console.log('cRT',cart)
           products: JSON.stringify(cart),
         },
       })
-
+      dispatch(clearCart())
       } catch (err) {
         console.log(err.message)
       }
     }
-    stripeToken && makeRequest();
+ 
+ 
+    stripeToken  && makeRequest();
+  
   }, [stripeToken, cart.total,router])
+
   const onToken = (token) => {
     setStripeToken(token)
   }
@@ -248,11 +254,15 @@ console.log('cRT',cart)
             <Hr />
 
           </Info>
-          <Summary>
-            <SummaryTitle> ORDER SUMMARY </SummaryTitle>
+         
+          {
+              cart.loginUser.userId==currentUser?._id ?
+                <Summary>
+            <SummaryTitle> Order Summery</SummaryTitle>
+        
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
+              <SummaryItemPrice>$  {cart.total} </SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
@@ -291,6 +301,33 @@ console.log('cRT',cart)
               </button>
             </StripeCheckout>
           </Summary>
+          :
+          <Summary>
+          <SummaryTitle> Order Summery</SummaryTitle>
+      
+          <SummaryItem>
+            <SummaryItemText>Subtotal</SummaryItemText>
+            <SummaryItemPrice>$ 0 </SummaryItemPrice>
+          </SummaryItem>
+          <SummaryItem>
+            <SummaryItemText>Estimated Shipping</SummaryItemText>
+            <SummaryItemPrice>$5.90</SummaryItemPrice>
+          </SummaryItem>
+          <SummaryItem>
+            <SummaryItemText>Shipping Discount</SummaryItemText>
+            <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+          </SummaryItem>
+          <SummaryItem type="total">
+            <SummaryItemText >Total</SummaryItemText>
+            <SummaryItemPrice>$0</SummaryItemPrice>
+          </SummaryItem>
+      
+        </Summary>
+    
+      
+
+          }
+       
         </Bottom>
       </Wrapper>
 
