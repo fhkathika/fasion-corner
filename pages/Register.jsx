@@ -135,7 +135,7 @@ const Register = () => {
                                 {
                                     show==false && <Warning> Successfully Registered</Warning>
                                 }
-                                {<NextRoute> <Link href='/login'>go to login page</Link></NextRoute>
+                                {<NextRoute> <Link href='/'>go to home page</Link></NextRoute>
                                 }
 
 

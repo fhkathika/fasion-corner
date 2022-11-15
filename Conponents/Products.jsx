@@ -16,8 +16,8 @@ const Products = ({ cat, filter, sort }) => {
         const getProducts = async () => {
             try {
                 const res = await axios.get(cat
-                    ? `http://localhost:5000/api/product?categories=${cat}`
-                    : "http://localhost:5000/api/product")
+                    ? `https://fathomless-brushlands-31959.herokuapp.com/api/product?categories=${cat}`
+                    : "https://fathomless-brushlands-31959.herokuapp.com/api/product")
                
                 setFilteredProducts(res.data);
                 setProducts(res.data);

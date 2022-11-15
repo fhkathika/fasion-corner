@@ -179,7 +179,7 @@ console.log('cRT',cart)
 
     console.log('sent');
       router.push({
-        pathname: "/success",
+        pathname: "/order/success",
         query: {
           stripeData: JSON.stringify(res.data),
           products: JSON.stringify(cart),

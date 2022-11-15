@@ -45,6 +45,7 @@ ${mobile({width:"50px"})}
 `;
 const Logo = styled.h1`
 font-weight:bold;
+cursor: pointer;
 ${mobile({fontSize:"24px" })}
 `;
 const MenuItem = styled.div`
@@ -81,6 +82,9 @@ const Navbar = () => {
     const dispatch=useDispatch()
 // console.log('userCart',userCart)
     const router=useRouter()
+    const handleGoToHome=()=>{
+        router.push('/')
+    }
    const handleRegister=(e)=>{
        e.preventDefault()
 router.push("/Register")
@@ -99,8 +103,8 @@ router.push("/Register")
 // console.log('my cart',cart)
  }
  
- const handleOrder=(id)=>{
-     router.push('/success')
+ const handleOrder=()=>{
+     router.push('/order/success')
  }
     return (
         <Container>
@@ -113,7 +117,7 @@ router.push("/Register")
                     </SearchConatiner>
                 </Left>
                 <Center>
-                    <Logo>FASION CORNER</Logo>
+                    <Logo onClick={handleGoToHome}>FASION CORNER</Logo>
                 </Center>
                 <Right>
                     <MenuItem onClick={handleRegister}>REGISTER</MenuItem>
